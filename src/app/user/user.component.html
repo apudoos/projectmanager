@@ -1,36 +1,38 @@
 <div class='card'>
-    <div class='card-body'>
-        <div class='row'>
-            <label for="firstname" class='col-sm-4'>First Name:</label>
-            <input class='col-sm-8' type="text" name="firstname" [(ngModel)]="user.firstName" /><br />
-        </div>
-        <div class='row'>
-                <label for="lastname" class='col-sm-4'>Last Name:</label>
-                <input class='col-sm-8' type="text" name="lastname" [(ngModel)]="user.lastName" /><br />
-        </div>
-        <div class='row'>
-                <label for="empid" class='col-sm-4'>Employee Id:</label>
-                <input class='col-sm-8' type="number" name="empid" [(ngModel)]="user.empId" /><br />
-        </div>        
-    </div>
-    
-    <div class='card-footer'>
-        <div class='row'>
-            <div class='col-sm-9'></div>
-            <div class='col-sm-1'>
-                <button class='btn btn-outline-secondary'
-                    (click)='onAdd()'
-                    style='width:80px'>
-                    Add
-                </button>
+    <form (ngSubmit)="onAddClicked()" #myForm="ngForm">
+        <div class='card-body'>
+            <div class='row'>
+                <label for="firstname" class='col-sm-2 offset-sm-2'>First Name:</label>
+                <input class='col-sm-6' type="text" name="firstname" [(ngModel)]="newUser.firstName" required /><br />
             </div>
-            <div class='col-sm-1'>
-                <button class='btn btn-outline-secondary'
-                    (click)='onAdd()'
-                    style='width:80px'>
-                    Reset
-                </button>
+            <br>
+            <div class='row'>
+                <label for="lastname" class='col-sm-2 offset-sm-2'>Last Name:</label>
+                <input class='col-sm-6' type="text" name="lastname" [(ngModel)]="newUser.lastName" required /><br />
+            </div>
+            <br>
+            <div class='row'>
+                <label for="empid" class='col-sm-2 offset-sm-2'>Employee Id:</label>
+                <input class='col-sm-6' type="number" name="empid" [(ngModel)]="newUser.empId" required /><br />
+            </div>
+
+        </div>
+
+        <div class='card-footer'>
+            <div class='row'>
+                <div class='col-sm-9'></div>
+                <div class='col-sm-1'>
+                    <button class='btn btn-outline-secondary' type="submit" [disabled]="!myForm.form.valid"
+                        style='width:80px'>
+                        Add
+                    </button>
+                </div>
+                <div class='col-sm-1'>
+                    <button class='btn btn-outline-secondary' (click)='onResetClicked()' style='width:80px'>
+                        Reset
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

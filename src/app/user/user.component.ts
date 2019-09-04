@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IUser } from './user';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  userList: IUser[] = [];
+  newUser: IUser;
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+  }
+
+  onAddClicked(): void {
+    
+  }
+
+  onResetClicked(): void {
+    this.newUser.empId=0;
+    this.newUser.firstName="";
+    this.newUser.lastName="";
   }
 
 }
