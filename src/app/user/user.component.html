@@ -3,17 +3,17 @@
         <div class='card-body'>
             <div class='row'>
                 <label for="firstname" class='col-sm-2 offset-sm-2'>First Name:</label>
-                <input class='col-sm-6' type="text" name="firstname" [(ngModel)]="newUser.firstName" required /><br />
+                <input class='col-sm-6' type="text" name="firstname" [(ngModel)]="newUser.firstName" required />
             </div>
             <br>
             <div class='row'>
                 <label for="lastname" class='col-sm-2 offset-sm-2'>Last Name:</label>
-                <input class='col-sm-6' type="text" name="lastname" [(ngModel)]="newUser.lastName" required /><br />
+                <input class='col-sm-6' type="text" name="lastname" [(ngModel)]="newUser.lastName" required />
             </div>
             <br>
             <div class='row'>
                 <label for="empid" class='col-sm-2 offset-sm-2'>Employee Id:</label>
-                <input class='col-sm-6' type="number" name="empid" [(ngModel)]="newUser.empId" required /><br />
+                <input class='col-sm-6' type="number" name="empid" [(ngModel)]="newUser.empId" required />
             </div>
 
         </div>
@@ -35,4 +35,26 @@
             </div>
         </div>
     </form>
+    <hr class="style1">
+
+    <div class='card-body' *ngIf='userList'></div>
+        <div *ngFor='let user of userList'>
+                <div class='row'>
+                    <input class='col-sm-6' type="text" name="firstname" [(ngModel)]="user.firstName" required />
+                    <button class='btn btn-outline-secondary' (click)='updateUser(user)' style='width:80px'>
+                            Edit
+                    </button>
+                </div>        
+                <div class='row'>
+                        <input class='col-sm-6' type="text" name="lastname" [(ngModel)]="user.lastName" required />
+                        <button class='btn btn-outline-secondary' (click)='deleteUser(user)' style='width:80px'>
+                            Delete
+                        </button>
+                </div>  
+                <div class='row'>
+                        <input class='col-sm-6' type="number" name="empid" [(ngModel)]="user.empId" required />                        
+                </div>        
+        </div>
+    </div>
+
 </div>

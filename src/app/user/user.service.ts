@@ -8,7 +8,7 @@ import { IUser } from './user';
   providedIn: 'root'
 })
 export class UserService {
-  private userGetUrl = 'api/products/products.json';
+  private userGetUrl = 'http://localhost:8080/users';
   private userPostUrl = 'api/products/products.json';
   private userPutUrl = 'api/products/products.json';
   private userDeleteUrl = 'api/products/products.json';
