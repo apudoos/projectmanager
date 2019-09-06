@@ -1,60 +1,94 @@
 <div class='card'>
     <form (ngSubmit)="onAddClicked()" #myForm="ngForm">
-        <div class='card-body'>
-            <div class='row'>
-                <label for="firstname" class='col-sm-2 offset-sm-2'>First Name:</label>
-                <input class='col-sm-6' type="text" name="firstname" [(ngModel)]="newUser.firstName" required />
+    <div class='card-body'>
+        <div class='row'>
+            <label for="firstname" class='col-sm-2 offset-sm-2'>First Name:</label>
+            <input class='col-sm-6' type="text" name="firstname" [(ngModel)]="firstName" required />
+        </div>
+        <br>
+        <div class='row'>
+            <label for="lastname" class='col-sm-2 offset-sm-2'>Last Name:</label>
+            <input class='col-sm-6' type="text" name="lastname" [(ngModel)]="lastName" required />
+        </div>
+        <br>
+        <div class='row'>
+            <label for="empid" class='col-sm-2 offset-sm-2'>Employee Id:</label>
+            <input class='col-sm-6' type="number" name="empid" [(ngModel)]="empId" customMin="0" #numberOne="ngModel" required />
+            <div *ngIf="numberOne.errors?.customMin">
+                Number cannot be zero.
             </div>
-            <br>
-            <div class='row'>
-                <label for="lastname" class='col-sm-2 offset-sm-2'>Last Name:</label>
-                <input class='col-sm-6' type="text" name="lastname" [(ngModel)]="newUser.lastName" required />
-            </div>
-            <br>
-            <div class='row'>
-                <label for="empid" class='col-sm-2 offset-sm-2'>Employee Id:</label>
-                <input class='col-sm-6' type="number" name="empid" [(ngModel)]="newUser.empId" required />
-            </div>
-
         </div>
 
-        <div class='card-footer'>
-            <div class='row'>
-                <div class='col-sm-9'></div>
-                <div class='col-sm-1'>
-                    <button class='btn btn-outline-secondary' type="submit" [disabled]="!myForm.form.valid"
-                        style='width:80px'>
-                        Add
-                    </button>
-                </div>
-                <div class='col-sm-1'>
-                    <button class='btn btn-outline-secondary' (click)='onResetClicked()' style='width:80px'>
-                        Reset
-                    </button>
-                </div>
+    </div>
+
+    <div class='card-footer'>
+        <div class='row'>
+            <div class='col-sm-5'></div>
+            <div class='col-sm-1'>
+                <button class='btn btn-outline-secondary' type="submit" [disabled]="!myForm.form.valid" style='width:80px'>
+                    <!-- [disabled]="!myForm.form.valid" -->
+                    Add
+                </button>
+            </div>
+            <div class='col-sm-1'></div>
+            <div class='col-sm-1'>
+                <button class='btn btn-outline-secondary' (click)='onResetClicked()' style='width:80px'>
+                    Reset
+                </button>
             </div>
         </div>
+    </div>
     </form>
     <hr class="style1">
 
-    <div class='card-body' *ngIf='userList'></div>
-        <div *ngFor='let user of userList'>
-                <div class='row'>
-                    <input class='col-sm-6' type="text" name="firstname" [(ngModel)]="user.firstName" required />
-                    <button class='btn btn-outline-secondary' (click)='updateUser(user)' style='width:80px'>
-                            Edit
-                    </button>
-                </div>        
-                <div class='row'>
-                        <input class='col-sm-6' type="text" name="lastname" [(ngModel)]="user.lastName" required />
-                        <button class='btn btn-outline-secondary' (click)='deleteUser(user)' style='width:80px'>
-                            Delete
-                        </button>
-                </div>  
-                <div class='row'>
-                        <input class='col-sm-6' type="number" name="empid" [(ngModel)]="user.empId" required />                        
-                </div>        
+    <div class='card-body'>
+        <div class='row'>
+        <div class='col-sm-1'></div>
+        <input class='col-sm-4' type="text" name="search" placeholder="Search..."/>
+        <label class='col-sm-1 text-right'>Sort:</label>
+        <button class='btn btn-outline-secondary' style='width:120px'>
+                First Name
+        </button>
+        
+        <button class='btn btn-outline-secondary button-margin' style='width:120px'>
+                Last Name
+        </button>
+        
+        <button class='btn btn-outline-secondary button-margin' style='width:80px'>
+                Id
+        </button>
         </div>
+    </div>
+
+    <hr class="style2">
+
+    <div class='card-body' *ngFor="let user of userList">
+        <!-- <div *ngFor="let user of userList"> -->
+        <div class='row'>
+            <div class='col-sm-1'></div>
+            <input class='col-sm-6' type="text" name="firstname" [(ngModel)]="user.firstName" />
+            <div class='col-sm-1'></div>
+            <button class='btn btn-outline-secondary' (click)='updateUser(user)' style='width:80px'>
+                Edit
+            </button>
+        </div>
+        <br>
+        <div class='row'>
+            <div class='col-sm-1'></div>
+            <input class='col-sm-6' type="text" name="lastname" [(ngModel)]="user.lastName" />
+            <div class='col-sm-1'></div>
+            <button class='btn btn-outline-secondary' (click)='deleteUser(user)' style='width:80px'>
+                Delete
+            </button>
+        </div>
+        <br>
+        <div class='row'>
+            <div class='col-sm-1'></div>
+            <input class='col-sm-6' type="number" name="empid" [(ngModel)]="user.empId" required />
+        </div>
+        <br>
+        <!-- </div> -->
+        <hr class="style2">
     </div>
 
 </div>

@@ -1,13 +1,13 @@
 <nav class='navbar navbar-expand navbar-light bg-light'>
   <a class='navbar-brand'>{{pageTitle}}</a>
   <ul class='nav nav-pills'>
-    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/project']">Add Project</a></li>
-    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/task']">Add Task</a></li>
-    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/task']">Add User</a></li>
-    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/task']">View Taskn</a></li>
+    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/welcome']">Home</a></li>
+    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/projects']">Add Project</a></li>
+    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/tasks']">Add Task</a></li>
+    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/users']">Add User</a></li>
+    <li><a class='nav-link' routerLinkActive='active' [routerLink]="['/viewtasks']">View Tasks</a></li>
   </ul>
 </nav>
 <div class='container'>
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
-

@@ -11,14 +11,17 @@ import { TaskComponent } from './task/task.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
+  { path: 'welcome', component: WelcomeComponent },
   { path: 'users', component: UserComponent },
   { path: 'projects', component: ProjectComponent },
   { path: 'tasks', component: TaskComponent },
   { path: 'viewtasks', component: ViewTaskComponent },
   { path: '',
-    redirectTo: '/users',
+    redirectTo: '/welcome',
     pathMatch: 'full'
   },
   { path: '**', component: PageNotFoundComponent }
@@ -32,15 +35,18 @@ const appRoutes: Routes = [
     ProjectComponent,
     TaskComponent,
     ViewTaskComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       {enableTracing: true}
+      // , { useHash : true} For html # style routing
     )
   ],
   providers: [],

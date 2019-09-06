@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { IUser } from './user';
@@ -9,11 +10,12 @@ import { IUser } from './user';
 })
 export class UserService {
   private userGetUrl = 'http://localhost:8080/users';
-  private userPostUrl = 'api/products/products.json';
-  private userPutUrl = 'api/products/products.json';
-  private userDeleteUrl = 'api/products/products.json';
+  //private userGetUrl = 'api/users/users.json';
+  private userPostUrl = 'http://localhost:8080/users';
+  private userPutUrl = 'http://localhost:8080/users';
+  private userDeleteUrl = 'http://localhost:8080/users';
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, ) { }
 
   getUsers(): Observable<IUser[]> {
     return this.http.get<IUser[]>(this.userGetUrl).pipe(
@@ -22,17 +24,27 @@ export class UserService {
     );
   }
 
-  postUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.userPostUrl).pipe(
-      tap(data => console.log('All: ' + JSON.stringify(data))),
-      catchError(this.handleError)
+  postUsers(user: IUser): Observable<IUser> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };    
+    console.log(JSON.stringify(user));
+    return this.http.post<IUser>(this.userPostUrl, JSON.stringify(user), httpOptions ).pipe(
+          catchError(this.handleError)
     );
   }
 
-  putUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.userPutUrl).pipe(
-      tap(data => console.log('All: ' + JSON.stringify(data))),
-      catchError(this.handleError)
+  putUsers(user: IUser): Observable<IUser> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'my-auth-token'
+      })
+    };    
+    return this.http.put<IUser>(this.userPutUrl, JSON.stringify(user), httpOptions ).pipe(
+          catchError(this.handleError)
     );
   }
 
