@@ -39,19 +39,25 @@ export class UserService {
   putUsers(user: IUser): Observable<IUser> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token'
+        'Content-Type':  'application/json'
       })
-    };    
-    return this.http.put<IUser>(this.userPutUrl, JSON.stringify(user), httpOptions ).pipe(
+    }; 
+    let url = this.userPutUrl.concat('/',user._id);
+    return this.http.put<IUser>(url, JSON.stringify(user), httpOptions ).pipe(
           catchError(this.handleError)
     );
   }
 
-  deleteUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.userDeleteUrl).pipe(
-      tap(data => console.log('All: ' + JSON.stringify(data))),
-      catchError(this.handleError)
+  deleteUser(user: IUser): Observable<{}> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    }; 
+     
+    let url = this.userDeleteUrl.concat('/',user._id);
+    return this.http.delete(url, httpOptions ).pipe(
+          catchError(this.handleError)
     );
   }
 

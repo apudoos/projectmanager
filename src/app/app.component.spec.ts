@@ -20,16 +20,40 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'projectmanager'`, () => {
+  it(`should have as title 'Project Manager'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('projectmanager');
+    expect(app.pageTitle).toEqual('Project Manager');
   });
 
-  it('should render title', () => {
+  it('should render menu with first entry as home', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('projectmanager app is running!');
+    expect(compiled.querySelector('li>a').textContent).toContain('Home');
+  });
+  it('should render menu with second entry as Add Project', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelectorAll('li>a')[1].textContent).toContain('Add Project');
+  });
+  it('should render menu with first entry as Add Task', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelectorAll('li>a')[2].textContent).toContain('Add Task');
+  });
+  it('should render menu with first entry as View Task', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelectorAll('li>a')[3].textContent).toContain('Add User');
+  });
+  it('should render menu with first entry as home', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelectorAll('li>a')[4].textContent).toContain('View Tasks');
   });
 });

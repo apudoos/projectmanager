@@ -44,17 +44,17 @@
     <div class='card-body'>
         <div class='row'>
         <div class='col-sm-1'></div>
-        <input class='col-sm-4' type="text" name="search" placeholder="Search..."/>
+        <input class='col-sm-4' type="text" name="search" placeholder="Search..." [(ngModel)]='listFilter'/>
         <label class='col-sm-1 text-right'>Sort:</label>
-        <button class='btn btn-outline-secondary' style='width:120px'>
+        <button class='btn btn-outline-secondary' (click)='sortByFirstName()' style='width:120px'>
                 First Name
         </button>
         
-        <button class='btn btn-outline-secondary button-margin' style='width:120px'>
+        <button class='btn btn-outline-secondary button-margin' (click)='sortByLastName()' style='width:120px'>
                 Last Name
         </button>
         
-        <button class='btn btn-outline-secondary button-margin' style='width:80px'>
+        <button class='btn btn-outline-secondary button-margin' (click)='sortByEmpId()' style='width:80px'>
                 Id
         </button>
         </div>
@@ -62,7 +62,7 @@
 
     <hr class="style2">
 
-    <div class='card-body' *ngFor="let user of userList">
+    <div class='card-body' *ngFor="let user of filteredList">
         <!-- <div *ngFor="let user of userList"> -->
         <div class='row'>
             <div class='col-sm-1'></div>
