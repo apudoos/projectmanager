@@ -11,8 +11,9 @@ import { TaskComponent } from './task/task.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  }   from '@angular/forms';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { DatePipe } from '@angular/common';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot(
@@ -49,7 +51,7 @@ const appRoutes: Routes = [
       // , { useHash : true} For html # style routing
     )
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

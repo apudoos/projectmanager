@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class UserComponent implements OnInit {
 
   userList: IUser[] = [];
-  userList$: Observable<IUser[]>;
+  //userList$: Observable<IUser[]>;
   filteredList: IUser[] = [];
   newUser: IUser | undefined;
   errorMessage = '';

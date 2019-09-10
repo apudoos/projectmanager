@@ -1,1 +1,146 @@
-<p>project works!</p>
+<div class='card'>
+        <form novalidate #projectForm="ngForm" (ngSubmit)="saveProject(projectForm)">
+            <div class="form-group row pt-4">
+                <div class="col-md-1"></div>
+                <label class="col-md-2 col-form-label text-right" for="projectId">Project:</label>
+                <div class="col-md-8">
+                        <input type="text" 
+                            id="projectId"
+                            [(ngModel)]="project.projectName" 
+                            #projectName="ngModel" 
+                            required
+                            name="projectName" 
+                            class="form-control" 
+                            placeholder="Project Name"
+                            [ngClass]="{'is-invalid': (projectName.touched || projectName.dirty) 
+                                            && !projectName.valid }" >
+                            <span class="invalid-feedback">
+                                <span *ngIf="projectName.errors?.required">
+                                    Project name is required
+                                </span>
+                            </span>
+                </div>                
+            </div>
+            <div class="form-group row pt-4">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-2">
+                        <label class="form-check-label pt-2">
+                            <input class="form-check-input" 
+                                type="checkbox" 
+                                name="enableDate"
+                                [(ngModel)]="isChecked">
+                                Set Start and End Date
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" 
+                            id="startDate"
+                            [disabled]="!isChecked"
+                            [(ngModel)]="startDate" 
+                            #projectStart="ngModel" 
+                            (click)="setStartDate()"
+                            name="projectStart" 
+                            class="form-control" >
+                    </div>
+                    <div class="col-md-3">
+                            <input type="date" 
+                                id="endDate"
+                                [disabled]="!isChecked"
+                                [(ngModel)]="endDate" 
+                                #projectEnd="ngModel"
+                                (click)="setEndDate()"
+                                name="projectEnd" 
+                                class="form-control" >
+                    </div>
+            </div>     
+            <div class="row mb-n4 style1">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-1">1</div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-1 text-right">30</div>
+            </div>
+            <div class="form-group row pt-4">
+                <div class="col-md-1"></div>
+                <label class="col-md-2 col-form-label text-right" for="priorityId">Priority:</label>
+                <div class="col-md-4">                      
+                    <input type="range" 
+                        id="priorityId"
+                        min="1" 
+                        max="30"
+                        [(ngModel)]="project.priority" 
+                        #priority="ngModel"
+                        name="priority" 
+                        class="form-control" >                  
+                </div>
+            </div> 
+            <div class="form-group row pt-4">
+                    <div class="col-md-1"></div>
+                    <label class="col-md-2 col-form-label text-right" for="priorityId">Manager:</label>
+                    <div class="col-md-4">                      
+                        <input type="text" 
+                            id="projectManager"
+                            [(ngModel)]="managerName" 
+                            #projectManager="ngModel" 
+                            disabled
+                            name="projectManager" 
+                            class="form-control" >
+                    </div>
+                    <button type="button" 
+                            class="btn btn-info btn-sm" 
+                            data-toggle="modal" 
+                            data-target="#exampleModal">Search
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Employee Search</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                    
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="list-group">
+                                        <a class="list-group-item list-group-item-action" 
+                                                    *ngFor="let user of userList"
+                                            (click)="onSearchSelect(user)">
+                                            {{user.empId}} {{user.firstName}} {{user.lastName}}
+                                        </a>
+                                    </div>
+                                </div>
+                    
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Accept</button>
+                                </div>
+                    
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class='card-footer'>
+                <div class='row'>
+                    <div class='col-sm-5'></div>
+                    <div class='col-sm-1'>
+                        <button class='btn btn-outline-secondary' type="submit" [disabled]="!projectForm.form.valid" style='width:80px'>
+                            Add
+                        </button>
+                    </div>
+                    <div class='col-sm-1'></div>
+                    <div class='col-sm-1'>
+                        <button class='btn btn-outline-secondary' type="reset" value="Reset" style='width:80px'>
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </form>
+
+ 
+</div>
