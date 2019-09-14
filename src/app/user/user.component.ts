@@ -73,6 +73,7 @@ export class UserComponent implements OnInit {
   fetchUserData() {
     this.userService.getUsers().subscribe(
       users => {
+        console.log("User List" + users);
         this.userList = users;
         this.filteredList = this.userList;
         console.log("User List" + this.userList);
@@ -98,6 +99,7 @@ export class UserComponent implements OnInit {
     console.log('User Added');
   }
 
+  //Remove this and do reset instead
   onResetClicked(): void {
     this.firstName='';
     this.lastName='';

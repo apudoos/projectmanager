@@ -1,16 +1,16 @@
 <div class='card'>
         <form novalidate #projectForm="ngForm" (ngSubmit)="saveProject(projectForm)">
-            <div class="form-group row pt-4">
+            <div class="form-group row pt-4 scroll-header">
                 <div class="col-md-1"></div>
                 <label class="col-md-2 col-form-label text-right" for="projectId">Project:</label>
                 <div class="col-md-8">
                         <input type="text" 
                             id="projectId"
-                            [(ngModel)]="project.projectName" 
+                            [(ngModel)]="newProject.projectName" 
                             #projectName="ngModel" 
                             required
                             name="projectName" 
-                            class="form-control" 
+                            class="form-cont    rol" 
                             placeholder="Project Name"
                             [ngClass]="{'is-invalid': (projectName.touched || projectName.dirty) 
                                             && !projectName.valid }" >
@@ -36,26 +36,33 @@
                         <input type="date" 
                             id="startDate"
                             [disabled]="!isChecked"
-                            [(ngModel)]="startDate" 
-                            #projectStart="ngModel" 
-                            (click)="setStartDate()"
+                            [ngModel]="newProject.startDate | date:'yyyy-MM-dd'" 
+                            (ngModelChange)="newProject.startDate = $event"
+                            #projectStart="ngModel"                             
                             name="projectStart" 
                             class="form-control" >
                     </div>
+                    <!-- The solution here is to split the binding into a one-way binding and an event binding - 
+                    which the syntax [(ngModel)] actually encompasses. [] is one-way binding syntax and () 
+                    is event binding syntax. When used together - [()] Angular recognizes this as shorthand 
+                    and wires up a two-way binding in the form of a one-way binding and an event binding to 
+                    a component object value. The reason you cannot use [()] with a pipe is that pipes work 
+                    only with one-way bindings. Therefore you must split out the pipe to only operate on the 
+                    one-way binding and handle the event separately. -->
                     <div class="col-md-3">
                             <input type="date" 
                                 id="endDate"
                                 [disabled]="!isChecked"
-                                [(ngModel)]="endDate" 
+                                [ngModel]="newProject.endDate | date:'yyyy-MM-dd'" 
+                                (ngModelChange)="newProject.endDate = $event"
                                 #projectEnd="ngModel"
-                                (click)="setEndDate()"
                                 name="projectEnd" 
                                 class="form-control" >
                     </div>
             </div>     
-            <div class="row mb-n4 style1">
+            <div class="row mb-n4 fontStyle1">
                     <div class="col-md-3"></div>
-                    <div class="col-md-1">1</div>
+                    <div class="col-md-1">0</div>
                     <div class="col-md-2"></div>
                     <div class="col-md-1 text-right">30</div>
             </div>
@@ -65,9 +72,10 @@
                 <div class="col-md-4">                      
                     <input type="range" 
                         id="priorityId"
-                        min="1" 
+                        min="0" 
                         max="30"
-                        [(ngModel)]="project.priority" 
+                        value="0"
+                        [(ngModel)]="newProject.priority" 
                         #priority="ngModel"
                         name="priority" 
                         class="form-control" >                  
@@ -125,8 +133,8 @@
                 <div class='row'>
                     <div class='col-sm-5'></div>
                     <div class='col-sm-1'>
-                        <button class='btn btn-outline-secondary' type="submit" [disabled]="!projectForm.form.valid" style='width:80px'>
-                            Add
+                        <button class='btn btn-primary' type="submit" [disabled]="!projectForm.form.valid" style='width:80px'>
+                            {{buttonName}}
                         </button>
                     </div>
                     <div class='col-sm-1'></div>
@@ -138,9 +146,98 @@
                 </div>
             </div>
 
-            
-
         </form>
+        <hr class="style1">
+
+        <div class='card-body'>
+            <div class='row'>
+                <div class='col-sm-2'></div>
+                <input class='col-sm-6' type="text" name="search" placeholder="Search..." [(ngModel)]='listFilter' />
+            </div>
+            <br>
+            <div class='row'>
+                <div class='col-sm-2'></div>
+                <label class='col-sm-1 text-right'>Sort By:</label>
+                <button class='btn btn-outline-secondary' (click)='sortByStartDate()' style='width:100px'>
+                    Start Date
+                </button>
+            
+                <button class='btn btn-outline-secondary button-margin' (click)='sortByEndDate()' style='width:100px'>
+                    End Date
+                </button>
+            
+                <button class='btn btn-outline-secondary button-margin' (click)='sortByPriority()' style='width:80px'>
+                    Priority
+                </button>
+                <button class='btn btn-outline-secondary button-margin' (click)='sortByCompleted()' style='width:120px'>
+                    Completed
+                </button>
+            </div>
+        </div>
+    
+        <hr class="style2">
+
+        <div class='card-body' *ngFor="let project of filteredList" >
+            <!-- <div *ngFor="let user of userList"> -->
+            <div class='row'>
+                <div class='col-sm-1'></div>
+                <div class='col-sm-5 col-big-color border bg-light '>
+                    <div class="row">
+                        <div class='col-sm-12 pt-2 font-weight-bold'>
+                            Project: {{project.projectName}}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class='col-sm-6'>
+                            No. of Tasks: {{project.taskCount}}
+                        </div>
+                        <div class='col-sm-6'>
+                            Completed: {{project.completed}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-sm-6 pb-2'>
+                            Start Date: {{project.startDate | date:'yyyy-MM-dd'}}
+                        </div>
+                        <div class='col-sm-6 pb-2'>
+                            End Date: {{project.endDate | date:'yyyy-MM-dd'}}
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-2 ml-4 pr-n4 col-big-color border bg-light'>
+                    <div class="row pt-2 text-center">
+                        <div class='col-sm-12 font-weight-bold'>
+                            Priority
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class='col-sm-12 font-weight-bold'>
+                            <span style='font-size:20px'>{{project.priority}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-2 ml-4'>
+                    <div class="row pt-1">
+                        <button class='btn btn-primary' 
+                               (click)="updateProject(project, 'scroll-header')"
+                               style='width:90px'>
+                            Update
+                        </button>
+                    </div>
+                    
+                    <div class="row pt-1">
+                        <button class='btn btn-outline-secondary' 
+                               (click)='suspendProject(project)' 
+                                style='width:90px'>
+                            Suspend
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br>
+             <hr class="style2">
+        </div>
 
  
 </div>
