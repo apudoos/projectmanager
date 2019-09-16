@@ -28,7 +28,7 @@ export class ProjectComponent implements OnInit {
   isChecked: boolean = false;
 
   constructor(
-    private datePipe: DatePipe, 
+    //private datePipe: DatePipe, 
     private projectService: ProjectService,
     private userService: UserService) 
     { 

@@ -1,3 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
+
+
+.fontStyle1 {
+    font-size: 12px;
+}
+
+hr.style1 {
+	border-top: 2px solid #000080;
+}
+
+hr.style2 {
+	background-color: #fff;
+	border-top: 2px dashed #8c8b8b;
+}
+
+.button-margin
+{
+    margin-left: 20px;
+}
+
+.col-big-color {
+	border-radius: 15px 15px 15px 15px;
+    background-color: #e3e3e3;
+}
