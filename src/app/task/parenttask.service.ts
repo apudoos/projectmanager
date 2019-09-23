@@ -13,6 +13,11 @@ export class ParentTaskService {
 
   constructor(private http: HttpClient) { }
 
+  parentTaskList$ = this.http.get<Parenttask[]>(this.url).pipe(
+    tap(data => console.log('All: ' + JSON.stringify(data))),
+    catchError(this.handleError)
+  );
+
   getParentTasks(): Observable<Parenttask[]> {
     return this.http.get<Parenttask[]>(this.url).pipe(
       tap(data => console.log('All: ' + JSON.stringify(data))),

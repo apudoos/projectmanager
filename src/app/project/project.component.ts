@@ -7,6 +7,8 @@ import { UserService } from '../user/user.service';
 import { IUser } from '../user/user';
 import { ProjectService } from './project.service';
 import { IProjectTask } from './projecttask';
+import { Task } from '../task/task';
+import { TaskService } from '../task/task.service';
 
 @Component({
   selector: 'app-project',
@@ -26,17 +28,21 @@ export class ProjectComponent implements OnInit {
   _listFilter = '';
   buttonName: String = 'Add';
   isChecked: boolean = false;
+  taskList: Task[] = [];
 
   constructor(
     //private datePipe: DatePipe, 
     private projectService: ProjectService,
-    private userService: UserService) 
+    private userService: UserService,
+    private taskService: TaskService ) 
     { 
       this.newProject = {};   
   }
 
   fetchTaskData() {
-
+    this.taskService.getTasks().subscribe(
+      tasks => this.taskList = tasks
+    );
   }
 
   get listFilter(): string {
@@ -55,19 +61,21 @@ export class ProjectComponent implements OnInit {
   }
 
   fetchProjectData() {
-    let i = 0;
     this.projectService.getProjects().subscribe(
       projects => {
         this.projectList = projects;
+
+
         this.filteredList = this.projectList;
  
         this.filteredList.forEach(x => {
-          if (x.endDate <= new Date()) {
+          console.log(`${x.endDate} and date: ${(new Date()).toISOString()}`);
+          if (x.endDate.toString() <= (new Date()).toISOString()) {
             x.completed = "Y"
           } else {
             x.completed = "N"
           }
-          x.taskCount = 2;
+          x.taskCount = Object.keys(this.taskList.filter(y => y.projectId===x._id)).length;          
         })
 
       },

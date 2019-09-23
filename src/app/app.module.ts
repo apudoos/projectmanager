@@ -14,12 +14,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule  }   from '@angular/forms';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { DatePipe } from '@angular/common';
+import { SortviewtaskPipe } from './view-task/sortviewtask.pipe';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'users', component: UserComponent },
   { path: 'projects', component: ProjectComponent },
   { path: 'tasks', component: TaskComponent },
+  { path: 'tasks/:id', component: TaskComponent },
   { path: 'viewtasks', component: ViewTaskComponent },
   { path: '',
     redirectTo: '/welcome',
@@ -37,7 +39,8 @@ const appRoutes: Routes = [
     TaskComponent,
     ViewTaskComponent,
     PageNotFoundComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    SortviewtaskPipe
   ],
   imports: [
     BrowserModule,

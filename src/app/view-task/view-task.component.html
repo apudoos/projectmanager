@@ -1,1 +1,112 @@
-<p>view-task works!</p>
+<div class='card'>
+        <div class='card-body'>
+                <div class='row'>                    
+                    <label class='col-sm-1 text-right'>Project:</label>
+                    <input class='col-sm-3' type="text" name="search" placeholder="Search..." [(ngModel)]='searchString' />
+                    <button class='btn btn-outline-primary ml-1' (click)='searchProject()' style='width:80px'>
+                            Search
+                    </button>
+                    <label class='col-sm-2 text-right'>Sort Task By:</label>                    
+                    <button class='btn btn-outline-secondary' (click)='sortByStartDate($event.timeStamp)' style='width:100px'>
+                        Start Date
+                    </button>
+                
+                    <button class='btn btn-outline-secondary button-margin' (click)='sortByEndDate()' style='width:100px'>
+                        End Date
+                    </button>
+                
+                    <button class='btn btn-outline-secondary button-margin' (click)='sortByPriority()' style='width:80px'>
+                        Priority
+                    </button>
+                    <button class='btn btn-outline-secondary button-margin' (click)='sortByCompleted()' style='width:110px'>
+                        Completed
+                    </button>
+                </div>
+            </div>
+        
+            <hr class="style2">
+            <!-- <div *ngIf="viewTaskList.length; else errorMessage"> -->
+            <div *ngIf="combinedTask$ | async as finalTaskList">
+                <div class='card-body' *ngFor="let task of (finalTaskList | sortviewtask: sortBy)">
+                    <!-- <div *ngFor="let user of userList"> -->
+                    <div class='row'>
+                        <div class='col-sm-2 ml-2'>
+                            <div class="row text-center">
+                                <label class="font-weight-bold">Task</label>
+                            </div>
+                            <div class="row border bg-light">
+                                <div class='col-sm-12 text-center mt-4 mb-4'>
+                                    {{task.taskName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-sm-2 ml-3'>
+                            <div class="row text-center">
+                                <label class="font-weight-bold">Parent</label>
+                            </div>
+                            <div class="row border bg-light">
+                                <div class='col-sm-12 text-center mt-4 mb-4'>
+                                    {{task.parentTaskName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-sm-1 ml-3'>
+                            <div class="row text-center">
+                                <label class="font-weight-bold">Priority</label>
+                            </div>
+                            <div class="row">
+                                <div class='col-sm-12 text-center'>
+                                    {{task.priority}}
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class='col-sm-2 ml-2'>
+                            <div class="row text-center">
+                                <label class="font-weight-bold">Start</label>
+                            </div>
+                            <div class="row ">
+                                {{task.startDate | date:'yyyy-MM-dd'}}
+                            </div>
+                        </div>
+            
+                        <div class='col-sm-2 ml-2'>
+                            <div class="row text-center">
+                                <label class="font-weight-bold">End</label>
+                            </div>
+                            <div class="row ">
+                                {{task.endDate | date:'yyyy-MM-dd'}}
+                            </div>
+                        </div>
+            
+                        <div class='col-sm-1 ml-2'>
+                            <div class="row pt-2">
+                                <a class='btn btn-outline-primary' 
+                                        [routerLink]="['/tasks', task._id]"
+                                        style='width:90px'>
+                                    Edit
+                                </a>
+                            </div>
+                        </div>
+                        <div class='col-sm-1 ml-1'>
+                            <div class="row pt-2">
+                                <a class='btn btn-outline-primary' style='width:90px'>
+                                    End Task
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <hr class="style2">
+                </div>
+            </div>
+            <ng-template #errorMessage>
+                <div class='card-body'>
+                      Search for a Project Name in the Search Box!!
+                </div>
+            </ng-template>
+
+
+
+</div>
+

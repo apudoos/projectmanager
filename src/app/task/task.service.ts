@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { Task } from './task';
 import { tap, catchError } from 'rxjs/operators';
 
@@ -9,9 +9,15 @@ import { tap, catchError } from 'rxjs/operators';
 })
 export class TaskService {
   private url = 'http://localhost:8080/tasks';
+  //private url = 'api/tasks/tasks.json';
 
 
   constructor(private http: HttpClient) { }
+
+  taskList$ =  this.http.get<Task[]>(this.url).pipe(
+    tap(data => console.log('All: ' + JSON.stringify(data))),
+    catchError(this.handleError)
+  );
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.url).pipe(
@@ -19,6 +25,20 @@ export class TaskService {
       catchError(this.handleError)
     );
   }
+
+  getTasksById(id: string): Observable<Task> {
+    if (id) {
+      let getByIdUrl = this.url.concat('/', id);
+      console.log(getByIdUrl);
+      return this.http.get<Task>(getByIdUrl).pipe(
+        tap(data => console.log('All: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+    } else {
+      return of(this.initializeTask());
+    }
+  }
+
 
   postTasks(task: Task): Observable<Task> {
     const httpOptions = {
@@ -33,6 +53,7 @@ export class TaskService {
   }
 
   putTask(task: Task): Observable<Task> {
+    console.log("Put Task");
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -58,6 +79,21 @@ export class TaskService {
     }
     console.error(errorMessage);
     return throwError(errorMessage);
+  }
+
+  private initializeTask(): Task {
+    return {
+      _id: '',
+      projectId: '',
+      projectName: '',
+      taskName: '',
+      priority: 0,
+      parentTaskId: '',
+      parentTaskName: '',
+      startDate: new Date,
+      endDate: new Date,
+      status: 'started'
+    }
   }
 
 

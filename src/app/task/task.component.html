@@ -10,12 +10,14 @@
                     <div class="col-md-4">                      
                         <input class="form-control col-md-12 " type="text" 
                             id="projectManager"
+                            [readonly]="true"
                             formControlName="projectName">
                     </div>
                     <button type="button" 
                             class="btn btn-info" 
                             data-toggle="modal" 
-                            data-target="#projectModal">Search
+                            data-target="#projectModal"
+                            [disabled]="disableProjectSearch">Search
                     </button>
 
                     <!-- The Modal -->
@@ -88,12 +90,14 @@
                     <div class="col-md-4">                      
                         <input class="form-control col-md-12 " type="text" 
                             id="parentTaskId"
+                            [readonly]="true"
                             formControlName="parentTask">
                     </div>
                     <button type="button" 
                             class="btn btn-info" 
                             data-toggle="modal" 
-                            data-target="#parentTaskModal">Search
+                            data-target="#parentTaskModal"
+                            [disabled]="disableParentTaskSearch">Search
                     </button>
 
                     <!-- The Modal -->
@@ -173,12 +177,14 @@
                     <div class="col-md-4">                      
                         <input class="form-control col-md-12" type="text" 
                             id="userName"
+                            [readonly]="true"
                             formControlName="userName">
                     </div>
                     <button type="button" 
                             class="btn btn-info" 
                             data-toggle="modal" 
-                            data-target="#userModal">Search
+                            data-target="#userModal"
+                            [disabled]="disableUserSearch">Search
                     </button>
 
                     <!-- The Modal -->
@@ -222,9 +228,9 @@
                 <div class='col-sm-1'>
                     <button class='btn btn-outline-secondary' 
                             type="submit" 
-                            [disabled]="!taskAddForm.valid" 
+                            [disabled]="!taskAddForm.valid"
                             style='width:80px'>
-                        Add
+                        {{buttonValue}}
                     </button>
                 </div>
                 <div class='col-sm-1'></div>

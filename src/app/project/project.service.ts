@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, shareReplay } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { IProject } from './project';
@@ -21,7 +21,21 @@ export class ProjectService {
   
   constructor(private http: HttpClient ) { }
 
+  project$ = this.http.get<IProject[]>(this.url).pipe(
+    tap(data => console.log('All: ' + JSON.stringify(data))),
+    //shareReplay(1),
+    catchError(this.handleError)
+  );
+
   getProjects(): Observable<IProject[]> {
+    return this.http.get<IProject[]>(this.url).pipe(
+      tap(data => console.log('All: ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+  }
+
+  getProjectsById(id: string): Observable<IProject[]> {
+    
     return this.http.get<IProject[]>(this.url).pipe(
       tap(data => console.log('All: ' + JSON.stringify(data))),
       catchError(this.handleError)
