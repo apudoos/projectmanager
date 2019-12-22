@@ -26,13 +26,13 @@ export class ViewTaskComponent implements OnInit {
     })
   );
 
-  taskList$ = this.taskService.taskList$.pipe(
+  taskList$ = this.taskService.getTaskList().pipe(
     catchError(err=> {
       return EMPTY;
     })
   );
 
-  parentTaskList$ = this.parentTaskService.parentTaskList$.pipe(
+  parentTaskList$ = this.parentTaskService.getTasklist().pipe(
     catchError(err=> {
       return EMPTY;
     })

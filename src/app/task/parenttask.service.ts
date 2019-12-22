@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Parenttask } from './parenttask';
 
@@ -13,10 +13,12 @@ export class ParentTaskService {
 
   constructor(private http: HttpClient) { }
 
-  parentTaskList$ = this.http.get<Parenttask[]>(this.url).pipe(
+  getTasklist() {
+    return this.http.get<Parenttask[]>(this.url).pipe(
     tap(data => console.log('All: ' + JSON.stringify(data))),
     catchError(this.handleError)
   );
+  }
 
   getParentTasks(): Observable<Parenttask[]> {
     return this.http.get<Parenttask[]>(this.url).pipe(
@@ -49,7 +51,7 @@ export class ParentTaskService {
     );
   }
 
-  private handleError(err: HttpErrorResponse) {
+  public handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
     let errorMessage = '';

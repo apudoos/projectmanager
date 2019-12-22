@@ -39,32 +39,7 @@ export class UserComponent implements OnInit {
   }
 
 
-  /* get firstName() {
-    return this._firstName;
-  }
-
-  set firstName(value: string) {
-    this._firstName = value;    
-  } */
-
- /*  get lastName() {
-    return this._lastName;
-  }
-
-  set lastName(value: string) {
-    this._lastName = value;
-  }
-
-  get empId() {
-    return this._empId.toString();
-  }
-
-  set empId(value: string) {
-    this._empId = +value;
-  } */
-
-
-  constructor(private userService: UserService) { this.newUser = {}}
+ constructor(private userService: UserService) { this.newUser = {}}
 
   ngOnInit() {
     this.fetchUserData();

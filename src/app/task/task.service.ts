@@ -14,10 +14,12 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  taskList$ =  this.http.get<Task[]>(this.url).pipe(
+  getTaskList() { 
+    return this.http.get<Task[]>(this.url).pipe(
     tap(data => console.log('All: ' + JSON.stringify(data))),
     catchError(this.handleError)
   );
+  }
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.url).pipe(
@@ -35,7 +37,20 @@ export class TaskService {
         catchError(this.handleError)
       );
     } else {
-      return of(this.initializeTask());
+      //return of(this.initializeTask());
+      return of({
+        _id: '',
+        projectId: '',
+        projectName: '',
+        taskName: '',
+        priority: 0,
+        parentTaskId: '',
+        parentTaskName: '',
+        startDate: new Date,
+        endDate: new Date,
+        status: 'started'
+      });
+
     }
   }
 
@@ -65,7 +80,7 @@ export class TaskService {
     );
   }
 
-  private handleError(err: HttpErrorResponse) {
+  public handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
     let errorMessage = '';
@@ -81,20 +96,20 @@ export class TaskService {
     return throwError(errorMessage);
   }
 
-  private initializeTask(): Task {
-    return {
-      _id: '',
-      projectId: '',
-      projectName: '',
-      taskName: '',
-      priority: 0,
-      parentTaskId: '',
-      parentTaskName: '',
-      startDate: new Date,
-      endDate: new Date,
-      status: 'started'
-    }
-  }
+  // public initializeTask(): Task {
+  //   return {
+  //     _id: '',
+  //     projectId: '',
+  //     projectName: '',
+  //     taskName: '',
+  //     priority: 0,
+  //     parentTaskId: '',
+  //     parentTaskName: '',
+  //     startDate: new Date,
+  //     endDate: new Date,
+  //     status: 'started'
+  //   }
+  // }
 
 
 }

@@ -61,7 +61,7 @@ export class UserService {
     );
   }
 
-  private handleError(err: HttpErrorResponse) {
+  handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
     let errorMessage = '';
@@ -73,7 +73,7 @@ export class UserService {
       // The response body may contain clues as to what went wrong,
       errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
     }
-    console.error(errorMessage);
+    console.error(err);
     return throwError(errorMessage);
   }
 
